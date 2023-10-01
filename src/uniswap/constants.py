@@ -1,5 +1,7 @@
 import os
 
+from src.uniswap.utils import load_abi
+
 TOKEN_CONTRACT_MAP = {
     'WETH': '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
     'USDC': '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
@@ -48,3 +50,9 @@ def root_directory() -> str:
 
 
 ROOT_DIRECTORY = root_directory()
+
+UNISWAP_V2_FACTORY_ABI = load_abi(f"{ROOT_DIRECTORY}/src/uniswap/ABI/UNISWAP_V2_FACTORY_ABI.json")
+UNISWAP_V3_FACTORY_ABI = load_abi(f"{ROOT_DIRECTORY}/src/uniswap/ABI/UNISWAP_V3_FACTORY_ABI.json")
+UNISWAP_V3_POOL_ABI = load_abi(f"{ROOT_DIRECTORY}/src/uniswap/ABI/UNISWAP_V3_POOL_ABI.json")
+ERC20_ABI = load_abi(f"{ROOT_DIRECTORY}/src/uniswap/ABI/ERC20_ABI.json")  # https://gist.github.com/veox/8800debbf56e24718f9f483e1e40c35c#file-erc20-abi-json
+
