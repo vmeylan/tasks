@@ -1,5 +1,5 @@
 from web3 import Web3
-from constants import UNISWAP_V2_FACTORY_ADDR, UNISWAP_V3_FACTORY_ADDR, UNISWAP_V3_TIERS_BPS, ROOT_DIRECTORY, ERC20_ABI, UNISWAP_V3_POOL_ABI, UNISWAP_V3_FACTORY_ABI, UNISWAP_V2_FACTORY_ABI
+from constants import *
 from dotenv import load_dotenv
 import os
 from decimal import Decimal, getcontext
@@ -130,6 +130,56 @@ def get_v3_pool_details(pool_address):
         "Contract address for token0": token0_address,
         "Contract address for token1": token1_address,
         "Fee tier (in bps)": fee_tier,
+        "Amount of token0 in the pool (normalized by decimals)": token0_balance,
+        "Amount of token1 in the pool (normalized by decimals)": token1_balance,
+        "Total value locked in the pool as token0 denominated in USD": token0_usd_value,
+        "Total value locked in the pool as token1 denominated in USD": token1_usd_value,
+        "Pool level price of token0 quoted by token1": priceToken0inToken1,
+        "Pool level price of token1 quoted by token0": priceToken1inToken0,
+        "Price of token0 in USD from external API": token0_usd_price,
+        "Price of token1 in USD from external API": token1_usd_price
+    }
+
+
+def get_v2_pool_details(pool_address):
+    # Create a contract object using Web3 for the v2 pool
+    pool_contract = w3.eth.contract(address=pool_address, abi=UNISWAP_V2_POOL_ABI)
+
+    # Fetch the token addresses
+    token0_address = pool_contract.functions.token0().call()
+    token1_address = pool_contract.functions.token1().call()
+
+    # Create contract objects for the tokens
+    token0_contract = w3.eth.contract(address=token0_address, abi=ERC20_ABI)
+    token1_contract = w3.eth.contract(address=token1_address, abi=ERC20_ABI)
+
+    # Fetch token decimals
+    token0_decimals = token0_contract.functions.decimals().call()
+    token1_decimals = token1_contract.functions.decimals().call()
+
+    # Fetch token balances (reserves) for the given v2 pool
+    token0_balance, token1_balance, _ = pool_contract.functions.getReserves().call()
+    token0_balance, token1_balance = token0_balance / (10 ** token0_decimals), token1_balance / (10 ** token1_decimals)
+
+    # Calculate pool-level prices
+    priceToken0inToken1 = token0_balance / token1_balance
+    priceToken1inToken0 = token1_balance / token0_balance
+
+    # Fetch the token prices in USD from an external source (placeholder)
+    # Replace with your actual implementation
+    token0_usd_price, token1_usd_price = get_token_prices(token0_address.lower(), token1_address.lower())
+
+    # Calculate values as per CSV format
+    token0_usd_value = token0_balance * token0_usd_price
+    token1_usd_value = token1_balance * token1_usd_price
+
+    # Return data in the format of the CSV headers
+    return {
+        "Uniswap version": "v2",
+        "Pool address": pool_address,
+        "Contract address for token0": token0_address,
+        "Contract address for token1": token1_address,
+        "Fee tier (in bps)": "N/A",  # Not applicable for v2
         "Amount of token0 in the pool (normalized by decimals)": token0_balance,
         "Amount of token1 in the pool (normalized by decimals)": token1_balance,
         "Total value locked in the pool as token0 denominated in USD": token0_usd_value,

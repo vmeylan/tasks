@@ -15,7 +15,7 @@ def main():
     for addr in v3_pool_addresses:
         pool_data.append(get_v3_pool_details(addr))
 
-    pool_data.append(fetch_pool_data(v2_pool_address, 'v2'))
+    pool_data.append(get_v2_pool_details(v2_pool_address))
 
     # write_to_csv(data)
 

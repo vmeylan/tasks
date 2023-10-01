@@ -53,6 +53,7 @@ ROOT_DIRECTORY = root_directory()
 
 UNISWAP_V2_FACTORY_ABI = load_abi(f"{ROOT_DIRECTORY}/src/uniswap/ABI/UNISWAP_V2_FACTORY_ABI.json")
 UNISWAP_V3_FACTORY_ABI = load_abi(f"{ROOT_DIRECTORY}/src/uniswap/ABI/UNISWAP_V3_FACTORY_ABI.json")
+UNISWAP_V2_POOL_ABI = load_abi(f"{ROOT_DIRECTORY}/src/uniswap/ABI/UNISWAP_V2_POOL_ABI.json")
 UNISWAP_V3_POOL_ABI = load_abi(f"{ROOT_DIRECTORY}/src/uniswap/ABI/UNISWAP_V3_POOL_ABI.json")
 ERC20_ABI = load_abi(f"{ROOT_DIRECTORY}/src/uniswap/ABI/ERC20_ABI.json")  # https://gist.github.com/veox/8800debbf56e24718f9f483e1e40c35c#file-erc20-abi-json
 
