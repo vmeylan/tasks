@@ -14,7 +14,7 @@ UNISWAP_V2_FACTORY_ADDR = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f'  # https:
 UNISWAP_V3_FACTORY_ADDR = '0x1F98431c8aD98523631AE4a59f267346ea31F984'  # https://docs.uniswap.org/contracts/v3/reference/deployments
 
 UNISWAP_V3_TIERS = [0.05/100, 0.3/100, 1/100]
-UNISWAP_V3_TIERS_BPS = [500, 3000, 10000]
+UNISWAP_V3_TIERS_BPS = [100, 500, 3000, 10000]
 """
 In Uniswap V3, the fee amount is represented as a uint24 in hundredths of a bips. A bip is 1×10−41×10−4 or 0.01%.
 
