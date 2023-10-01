@@ -28,7 +28,10 @@ def main(token0_address=None, token1_address=None):
         reverse_map = {v: k for k, v in TOKEN_CONTRACT_MAP.items()}
         token0_name = reverse_map.get(token0_address, token0_address)
         token1_name = reverse_map.get(token1_address, token1_address)
-        pool_name = f"{token0_name}-{token1_name}"
+        if token0_name and token1_name:
+            pool_name = f"{token0_name}-{token1_name}"
+        else:
+            pool_name = f"{token0_address}-{token1_address}"
 
     write_to_csv(pool_data, pool_name=pool_name)
 
