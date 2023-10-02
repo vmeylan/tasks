@@ -79,6 +79,7 @@ def parse_args():
 contract_addresses = [UNISWAP_V2_FACTORY_ADDR, UNISWAP_V3_FACTORY_ADDR]
 block_identifier = 10008355
 
+
 def run():
     args = parse_args()
 
