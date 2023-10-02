@@ -77,18 +77,53 @@ def decode_transaction(transaction, contract_address):
         return None
 
 
-def get_transactions(block_identifier: int, contract_addresses: List[str]):
+def get_transactions(block_identifier: int, contract_addresses: List[str], interaction_type: str = "both"):
+    """
+    On the reason of using interaction_type selector and defaulting to both (GPT4):
+
+    The task specifies to return transactions that "interact with one of the given smart contracts,"
+    but the wording is somewhat ambiguous. In the context of Ethereum, transactions "interact" with a
+    contract by sending data to the contract's address. So, it's standard to look for the contract's
+    address in the to field of the transaction.
+    However, in a broader interpretation, any transaction involving the contract, whether it's a contract
+    creation transaction, a contract method call, or even Ether being sent from a contract, could be considered as "interacting" with the contract.
+
+    To capture all interactions:
+    Transactions To the Contract: These are typical transactions where someone sends Ether to
+    the contract or triggers one of its methods. This is captured by the to field.
+
+    Transactions From the Contract: These would be contract creation transactions
+    (where the contract was first put on the blockchain). They are less common to track in this context,
+    but if you wanted to, you could look for the from field being one of the contract addresses.
+    """
     block = w3.eth.get_block(block_identifier, full_transactions=True)
     results = []
+
     for transaction in block.transactions:
-        if transaction['to'] in contract_addresses:
-            decoded_data = decode_transaction(transaction, transaction['to'])
+        # Depending on the interaction type, decide if the transaction should be processed
+        process_transaction = False
+
+        if interaction_type == "both":
+            process_transaction = transaction['to'] in contract_addresses or transaction['from'] in contract_addresses
+        elif interaction_type == "to":
+            process_transaction = transaction['to'] in contract_addresses
+        elif interaction_type == "from":
+            process_transaction = transaction['from'] in contract_addresses
+        else:
+            raise ValueError(f"Invalid interaction type: {interaction_type}. Allowed values are 'both', 'to', 'from'.")
+
+        # If the transaction matches the filtering criteria
+        if process_transaction:
+            # If the transaction 'to' address is a contract address, attempt to decode it
+            decoded_data = decode_transaction(transaction, transaction['to']) if transaction['to'] in contract_addresses else None
+
             results.append({
                 "transaction_hash": transaction.hash.hex(),
-                "contract_address": transaction['to'],
+                "contract_address": transaction['to'] if transaction['to'] in contract_addresses else transaction['from'],
                 "decoded": decoded_data
             })
 
+    # Return only transactions with decoded data (i.e., only those which interacted 'to' a contract and were decodable)
     return [result for result in results if result["decoded"] is not None]
 
 
