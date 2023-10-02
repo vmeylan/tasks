@@ -180,7 +180,7 @@ def get_pool_by_asset_from_graph(underlying_asset: str) -> str:
 # Example usage:
 
 
-def fetch_and_aggregate_data(token_symbol):
+def run(token_symbol='USDC', user_input="0x6b175474e89094c44da98b954eedeac495271d0f"):
     user_input = "0x6b175474e89094c44da98b954eedeac495271d0f"
     pool_address = get_pool_by_asset_from_graph(user_input)
 
@@ -196,5 +196,3 @@ def fetch_and_aggregate_data(token_symbol):
     logging.info("Merged supplies and borrows data.")
 
 
-# Example usage:
-fetch_and_aggregate_data("USDC")

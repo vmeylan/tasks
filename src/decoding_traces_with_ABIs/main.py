@@ -74,7 +74,8 @@ def get_traces(block_identifier: Union[int, str], contract_addresses: List[str],
 contract_addresses = [UNISWAP_V2_FACTORY_ADDR, UNISWAP_V3_FACTORY_ADDR]
 block_identifier = 10008355
 
-if __name__ == "__main__":
+
+def run():
     args = parse_args()
 
     if args:
@@ -100,3 +101,7 @@ if __name__ == "__main__":
     # Fetch transactions for provided block and addresses
     print(f"Returned traces for addresses {addresses_to_use} and for block {block_identifier}:")
     print(get_traces(block_identifier_to_use, addresses_to_use))
+
+
+if __name__ == "__main__":
+    run()

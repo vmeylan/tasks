@@ -36,7 +36,7 @@ def main(token0_address=None, token1_address=None):
     write_to_csv(pool_data, pool_name=pool_name)
 
 
-if __name__ == "__main__":
+def run():
     parser = argparse.ArgumentParser(description='Generate Uniswap CSV for token pair.')
     parser.add_argument('--token0', type=str, help='Smart contract address of token0', default='')
     parser.add_argument('--token1', type=str, help='Smart contract address of token1', default='')
@@ -60,3 +60,7 @@ if __name__ == "__main__":
         print(f"Starting processing for WETH and USDC pools ...")
 
     main(args.token0, args.token1)
+
+
+if __name__ == "__main__":
+    run()
