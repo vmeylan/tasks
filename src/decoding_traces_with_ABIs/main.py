@@ -37,7 +37,7 @@ def get_traces(block_identifier: Union[int, str], contract_addresses: List[str],
     headers = {'Content-Type': 'application/json'}
     response = requests.post(url, headers=headers, json=payload)
 
-    traces = response.json()['result']
+    traces = response.json()['result']  # will fail with error: b'{"jsonrpc":"2.0","id":1,"error":{"code":-32600,"message":"trace_block is not available on the Free tier - upgrade to Growth, Scale, or Enterprise for access. See available methods at https://docs.alchemy.com/alchemy/documentation/apis"}}'
     results = []
 
     for trace in traces:
