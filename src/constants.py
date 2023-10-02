@@ -57,3 +57,14 @@ UNISWAP_V2_POOL_ABI = load_abi(f"{ROOT_DIRECTORY}/src/uniswap/ABI/UNISWAP_V2_POO
 UNISWAP_V3_POOL_ABI = load_abi(f"{ROOT_DIRECTORY}/src/uniswap/ABI/UNISWAP_V3_POOL_ABI.json")
 ERC20_ABI = load_abi(f"{ROOT_DIRECTORY}/src/uniswap/ABI/ERC20_ABI.json")  # https://gist.github.com/veox/8800debbf56e24718f9f483e1e40c35c#file-erc20-abi-json
 
+ABI_PATH = f"{ROOT_DIRECTORY}/src/uniswap/ABI/"
+
+ADDRESS_TO_ABI_MAPPING = {
+    TOKEN_CONTRACT_MAP['WETH']: load_abi(f"{ABI_PATH}ERC20_ABI.json"),
+    TOKEN_CONTRACT_MAP['USDC']: load_abi(f"{ABI_PATH}ERC20_ABI.json"),
+    TOKEN_CONTRACT_MAP['DAI']: load_abi(f"{ABI_PATH}ERC20_ABI.json"),
+    TOKEN_CONTRACT_MAP['WBTC']: load_abi(f"{ABI_PATH}ERC20_ABI.json"),
+    TOKEN_CONTRACT_MAP['USDT']: load_abi(f"{ABI_PATH}ERC20_ABI.json"),
+    UNISWAP_V2_FACTORY_ADDR: load_abi(f"{ABI_PATH}UNISWAP_V2_FACTORY_ABI.json"),
+    UNISWAP_V3_FACTORY_ADDR: load_abi(f"{ABI_PATH}UNISWAP_V3_FACTORY_ABI.json"),
+}

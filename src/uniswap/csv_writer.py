@@ -1,6 +1,6 @@
 import csv
 
-from src.uniswap.constants import ROOT_DIRECTORY
+from src.constants import ROOT_DIRECTORY
 
 headers = [
     "Uniswap version",  # e.g., "v2" or "v3"

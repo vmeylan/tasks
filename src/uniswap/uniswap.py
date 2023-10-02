@@ -1,5 +1,5 @@
 from web3 import Web3
-from constants import *
+from src.constants import *
 from dotenv import load_dotenv
 import os
 from decimal import Decimal, getcontext
