@@ -4,8 +4,6 @@ import requests
 from selenium import webdriver
 import os
 
-from web3 import Web3
-
 from src.constants import root_directory, ADDRESS_TO_ABI_MAPPING
 
 
@@ -104,7 +102,7 @@ def save_abi_locally(contract_address: str, directory=f"{root_directory()}/src/u
     return abi
 
 
-def decode_transaction(transaction, contract_address):
+def decode_transaction(w3, transaction, contract_address):
     abi = ADDRESS_TO_ABI_MAPPING.get(contract_address, None)  # Retrieve ABI directly from the mapping
     if not abi:
         return None
@@ -118,5 +116,4 @@ def decode_transaction(transaction, contract_address):
     except:
         return None
 
-# Setup web3 instance with the provider
-w3 = Web3(Web3.HTTPProvider(os.environ.get('ETHEREUM_HTTP_ENDPOINT')))
+

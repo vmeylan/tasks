@@ -2,9 +2,13 @@ from typing import List
 from dotenv import load_dotenv
 load_dotenv()
 import argparse
+from web3 import Web3
 
 from src.constants import *
-from src.utils import save_abi_locally, decode_transaction, w3
+from src.utils import save_abi_locally, decode_transaction
+
+
+w3 = Web3(Web3.HTTPProvider(os.environ.get('ETHEREUM_HTTP_ENDPOINT')))  # https://www.quicknode.com/
 
 
 def get_transactions(block_identifier: int, contract_addresses: List[str], interaction_type: str = "both"):
@@ -45,7 +49,7 @@ def get_transactions(block_identifier: int, contract_addresses: List[str], inter
         # If the transaction matches the filtering criteria
         if process_transaction:
             # If the transaction 'to' address is a contract address, attempt to decode it
-            decoded_data = decode_transaction(transaction, transaction['to']) if transaction['to'] in contract_addresses else None
+            decoded_data = decode_transaction(w3, transaction, transaction['to']) if transaction['to'] in contract_addresses else None
 
             results.append({
                 "transaction_hash": transaction.hash.hex(),

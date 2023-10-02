@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 from src.constants import *
 from src.decoding_transactions_with_ABIs.main import parse_args
-from src.utils import save_abi_locally, decode_transaction
+from src.utils import *
 
 load_dotenv()
 w3 = Web3(Web3.HTTPProvider(os.environ.get('ETHEREUM_HTTP_ENDPOINT_ALCHEMY')))
@@ -56,7 +56,7 @@ def get_traces(block_identifier: Union[int, str], contract_addresses: List[str],
         if process_trace:
             # If the trace 'to' address is a contract address, attempt to decode it
             if trace['action']['to'] in contract_addresses:
-                decoded_data = decode_transaction({'to': trace['action']['to'], 'input': trace['action'].get('input', '0x')}, trace['action']['to'])
+                decoded_data = decode_transaction(w3, {'to': trace['action']['to'], 'input': trace['action'].get('input', '0x')}, trace['action']['to'])
             else:
                 decoded_data = None
 
