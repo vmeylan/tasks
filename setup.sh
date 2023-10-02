@@ -10,4 +10,4 @@ source env/bin/activate
 pip install -r requirements.txt
 
 # deactivate virtual environment
-deactivate
+# deactivate
